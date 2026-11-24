@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preventivo sgombero e trasloco – Esempio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bosco:#1D3557;--ink:#18201A;--salvia:#E8EEF6;--oro:#C46A1B;--vino:#8E2C36;--line:#DCE2D6;--mute:#5C675D;--wa:#1F9D55}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.5 Manrope,Arial,sans-serif}
+.wrap{max-width:540px;margin:0 auto;padding:28px 20px 140px}
+.house{font-weight:700;color:var(--bosco);font-size:15px;margin:0}
+h1{font:400 36px/1.08 Gloock,Georgia,serif;margin:6px 0 10px;letter-spacing:-.2px}
+.lead{color:var(--mute);margin:0;max-width:40ch}
+.step{margin-top:36px}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.n{width:28px;height:28px;border-radius:50%;background:var(--bosco);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
+h2{font:400 22px/1.2 Gloock,Georgia,serif;margin:0}
+/* segnaposto */
+.cards{display:grid;gap:10px}
+.card{position:relative;display:grid;grid-template-columns:76px 1fr auto;align-items:center;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:background .2s,border-color .2s}
+.card input{position:absolute;opacity:0;pointer-events:none}
+.date{align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1.5px dashed var(--line);padding:12px 0}
+.date b{font:400 32px/1 Gloock,Georgia,serif}
+.date span{font-size:13px;font-weight:700;color:var(--mute)}
+.what{padding:13px 14px}
+.what b{display:block;font-weight:700;font-size:16px}
+.what small{color:var(--mute);font-size:14px}
+.price{padding-right:16px;font-weight:800;color:var(--oro);font-size:17px;white-space:nowrap}
+.card:has(input:checked){background:var(--bosco);border-color:var(--bosco);color:#fff}
+.card:has(input:checked) .date{border-color:rgba(255,255,255,.35)}
+.card:has(input:checked) .date span,.card:has(input:checked) .what small{color:#CFDACB}
+.card:has(input:checked) .price{color:#F1D08A}
+.card:has(input:focus-visible){outline:3px solid var(--oro);outline-offset:2px}
+/* persone */
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row small{display:block;color:var(--mute);font-size:14px}
+.cnt{display:flex;align-items:center;gap:10px}
+.cnt button{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--bosco);background:#fff;color:var(--bosco);font:600 22px/1 Manrope,sans-serif;cursor:pointer}
+.cnt button:active{background:var(--salvia)}
+.cnt button:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+.cnt output{min-width:24px;text-align:center;font-weight:800;font-size:19px}
+/* pill */
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;border:1.5px solid var(--line);border-radius:999px;padding:9px 15px;cursor:pointer;font-weight:600;font-size:15px}
+.pill input{position:absolute;opacity:0;pointer-events:none}
+.pill:has(input:checked){background:var(--salvia);border-color:var(--bosco);color:var(--bosco)}
+.pill:has(input:focus-visible){outline:3px solid var(--oro);outline-offset:2px}
+label.f{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+input[type=text],input[type=tel],textarea{width:100%;font:inherit;padding:12px 13px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+input:focus,textarea:focus{outline:none;border-color:var(--bosco);box-shadow:0 0 0 3px var(--salvia)}
+textarea{min-height:76px;resize:vertical}
+.hint{font-size:14px;color:var(--mute);margin:10px 0 0}
+.deposit{margin-top:30px;padding:16px;border-radius:14px;background:var(--salvia);font-size:15px}
+.deposit b{color:var(--bosco)}
+.demo{color:var(--mute);font-size:13px;margin-top:24px}
+.flag{animation:flag 1.4s}
+@keyframes flag{0%,60%{box-shadow:0 0 0 3px var(--vino)}100%{box-shadow:0 0 0 0 transparent}}
+/* barra */
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom))}
+.bar .in{max-width:540px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.sum{flex:1;min-width:0}
+.sum small{display:block;color:var(--mute);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sum b{font:400 28px/1.05 Gloock,Georgia,serif}
+.send{flex:none;background:var(--wa);color:#fff;border-radius:14px;padding:14px 18px;font-weight:800;font-size:16px;text-decoration:none;text-align:center;max-width:62%}
+.send:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+.send.err{background:#fff;color:var(--vino);border:1.5px solid var(--vino);font-weight:700;font-size:15px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.est{display:flex;gap:8px;align-items:baseline}
+.sel{width:100%;font:inherit;padding:12px 13px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tiny{font-size:13px;color:var(--mute)}
+</style>
+</head>
+<body>
+<main class="wrap">
+<p class="house">Traslochi Esempio</p>
+<h1>Il tuo preventivo in due minuti</h1>
+<p class="lead">Rispondi a poche domande: ti diamo subito una stima e ti confermiamo il prezzo su WhatsApp.</p>
+
+<section class="step" aria-labelledby="s1">
+ <div class="sh"><span class="n">1</span><h2 id="s1">Cosa ti serve?</h2></div>
+ <div class="cards">
+  <label class="card"><input type="radio" name="tp" value="Trasloco|250" checked><div class="date"><b>🚚</b><span>casa</span></div><div class="what"><b>Trasloco</b><small>Da una casa all'altra</small></div><div class="price">da 250 €</div></label>
+  <label class="card"><input type="radio" name="tp" value="Sgombero|180"><div class="date"><b>📦</b><span>locali</span></div><div class="what"><b>Sgombero</b><small>Svuotiamo e smaltiamo noi</small></div><div class="price">da 180 €</div></label>
+  <label class="card"><input type="radio" name="tp" value="Trasporto di pochi mobili|80"><div class="date"><b>🛋️</b><span>pochi pezzi</span></div><div class="what"><b>Pochi mobili</b><small>Divano, armadio, elettrodomestici</small></div><div class="price">da 80 €</div></label>
+ </div>
+</section>
+
+<section class="step" aria-labelledby="s2">
+ <div class="sh"><span class="n">2</span><h2 id="s2">Da dove a dove?</h2></div>
+ <label class="f" for="da">Partenza (città o CAP)</label><input type="text" id="da" placeholder="Roma, Monteverde">
+ <div class="two">
+  <div><label class="f" for="pda">Piano</label><select class="sel" id="pda"><option value="0">Terra</option><option value="1">1°</option><option value="2">2°</option><option value="3">3°</option><option value="4">4° o più</option></select></div>
+  <div><label class="f" for="ada">Ascensore</label><select class="sel" id="ada"><option value="1">Sì</option><option value="0">No</option></select></div>
+ </div>
+ <div id="arr">
+ <label class="f" for="a">Arrivo (città o CAP)</label><input type="text" id="a" placeholder="Roma, Eur">
+ <div class="two">
+  <div><label class="f" for="pa2">Piano</label><select class="sel" id="pa2"><option value="0">Terra</option><option value="1">1°</option><option value="2">2°</option><option value="3">3°</option><option value="4">4° o più</option></select></div>
+  <div><label class="f" for="aa">Ascensore</label><select class="sel" id="aa"><option value="1">Sì</option><option value="0">No</option></select></div>
+ </div></div>
+</section>
+
+<section class="step" aria-labelledby="s3">
+ <div class="sh"><span class="n">3</span><h2 id="s3">Quanto è grande?</h2></div>
+ <div class="pills" id="sz">
+  <label class="pill"><input type="radio" name="sz" value="Monolocale|0">Monolocale</label>
+  <label class="pill"><input type="radio" name="sz" value="2 locali|150" checked>2 locali</label>
+  <label class="pill"><input type="radio" name="sz" value="3 locali|300">3 locali</label>
+  <label class="pill"><input type="radio" name="sz" value="4 locali o più|500">4 o più</label>
+  <label class="pill"><input type="radio" name="sz" value="Cantina o garage|50">Cantina o garage</label>
+ </div>
+</section>
+
+<section class="step" aria-labelledby="s4">
+ <div class="sh"><span class="n">4</span><h2 id="s4">Servizi in più</h2></div>
+ <div class="pills" id="ex">
+  <label class="pill"><input type="checkbox" value="Smontaggio e montaggio mobili|120">Smontaggio e montaggio mobili</label>
+  <label class="pill"><input type="checkbox" value="Imballaggio|90">Imballaggio</label>
+  <label class="pill"><input type="checkbox" value="Deposito temporaneo|100">Deposito temporaneo</label>
+  <label class="pill"><input type="checkbox" value="Montacarichi esterno|150">Montacarichi esterno</label>
+ </div>
+</section>
+
+<section class="step" aria-labelledby="s5">
+ <div class="sh"><span class="n">5</span><h2 id="s5">Quando e chi sei</h2></div>
+ <label class="f" for="dt">Data preferita</label><input type="text" id="dt" placeholder="Es. sabato 12 dicembre, o flessibile">
+ <label class="f" for="nm">Nome e cognome</label><input type="text" id="nm" autocomplete="name" placeholder="Mario Rossi">
+ <label class="f" for="tl">Telefono</label><input type="tel" id="tl" autocomplete="tel" inputmode="tel" placeholder="333 123 4567">
+</section>
+
+<div class="deposit"><b>Il prezzo è una stima.</b> Dopo l'invio mandaci 2-3 foto delle stanze su WhatsApp: ti confermiamo il prezzo esatto, spesso senza bisogno di sopralluogo.</div>
+<p class="demo">Esempio dimostrativo: nome, servizi e prezzi sono di prova e si adattano alla vostra impresa.</p>
+</main>
+
+<div class="bar"><div class="in">
+ <div class="sum"><small id="who">Trasloco, 2 locali</small><b id="tot">400-480 €</b></div>
+ <a class="send" id="send" href="#" target="_blank" rel="noopener">Invia su WhatsApp</a>
+</div></div>
+
+<script>
+const NUMERO="393318522753";let tried=false;
+const $=s=>document.querySelector(s);
+const val=s=>{const v=document.querySelector(s).value.split('|');return{t:v[0],p:+v[1]}};
+function chk(s){let h=0;for(const c of s+'trasloco')h=(h*31+c.charCodeAt(0))>>>0;return h.toString(36).slice(-3).toUpperCase();}
+function stima(){
+ const tp=val('input[name=tp]:checked'),sz=val('input[name=sz]:checked'),pochi=tp.t.startsWith('Trasporto');
+ let b=tp.p+(pochi?0:sz.p);
+ const scale=(p,asc)=>asc=='0'?(+p)*40:0;
+ b+=scale($('#pda').value,$('#ada').value); if(tp.t!='Sgombero')b+=scale($('#pa2').value,$('#aa').value);
+ const ex=[...document.querySelectorAll('#ex input:checked')].map(i=>{const v=i.value.split('|');b+=+v[1];return v[0]});
+ const lo=Math.round(b/10)*10,hi=Math.round(b*1.2/10)*10;return{tp,sz,ex,lo,hi};}
+function problema(){
+ if(!$('#da').value.trim())return{t:'Scrivi da dove partiamo',el:'#da'};
+ if($('#arr').style.display!='none'&&!$('#a').value.trim())return{t:'Scrivi dove arriviamo',el:'#a'};
+ if(!$('#nm').value.trim())return{t:'Scrivi nome e cognome',el:'#nm'};
+ if($('#tl').value.replace(/\D/g,'').length<9)return{t:'Scrivi il telefono',el:'#tl'};
+ return null;}
+function upd(){
+ const tp=val('input[name=tp]:checked');$('#arr').style.display=tp.t=='Sgombero'?'none':'';
+ const s=stima();$('#tot').textContent=s.lo+'-'+s.hi+' €';$('#who').textContent=s.tp.t+', '+s.sz.t.toLowerCase();
+ const pl=v=>['terra','1°','2°','3°','4° o più'][+v];
+ const code=['P',s.tp.t[0],s.sz.t[0],s.lo,s.hi].join('-');
+ const lines=['Ciao! Vorrei un preventivo.','','Servizio: '+s.tp.t,'Dimensione: '+s.sz.t,'Partenza: '+$('#da').value.trim()+' (piano '+pl($('#pda').value)+', ascensore '+($('#ada').value=='1'?'sì':'no')+')'];
+ if(s.tp.t!='Sgombero')lines.push('Arrivo: '+$('#a').value.trim()+' (piano '+pl($('#pa2').value)+', ascensore '+($('#aa').value=='1'?'sì':'no')+')');
+ lines.push('Servizi in più: '+(s.ex.join(', ')||'nessuno'),'Data: '+($('#dt').value.trim()||'flessibile'),'Nome: '+$('#nm').value.trim(),'Telefono: '+$('#tl').value.trim(),'','Stima indicata: '+s.lo+'-'+s.hi+' €','Codice preventivo: '+code+'-'+chk(code),'','Vi mando subito 2-3 foto delle stanze.');
+ const a=$('#send'),p=problema();
+ if(p){a.classList.toggle('err',tried);a.textContent=tried?p.t:'Invia su WhatsApp';a.href='#';a.removeAttribute('target');a.onclick=x=>{x.preventDefault();tried=true;upd();const el=$(p.el);el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('flag');void el.offsetWidth;el.classList.add('flag');el.focus({preventScroll:true});};}
+ else{a.classList.remove('err');a.textContent='Invia su WhatsApp';a.href='https://wa.me/'+NUMERO+'?text='+encodeURIComponent(lines.join('\n'));a.target='_blank';a.onclick=null;}
+}
+document.addEventListener('input',upd);document.addEventListener('change',upd);upd();
+</script>
+</body>
+</html>
